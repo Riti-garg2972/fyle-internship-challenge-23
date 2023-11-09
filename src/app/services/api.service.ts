@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap, throwError } from 'rxjs';
 
@@ -16,4 +16,15 @@ export class ApiService {
   }
 
   // implement getRepos method by referring to the documentation. Add proper types for the return type and params 
+
+  getRepos(githubUsername: string, searchParam: URLSearchParams) {
+    const url = `https://api.github.com/users/${githubUsername}/repos`;
+    let params = new HttpParams();
+  
+    searchParam.forEach((value, key) => {
+      params = params.set(key, value);
+    });
+  
+    return this.httpClient.get(url, { params });
+}
 }
